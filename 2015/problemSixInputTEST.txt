@@ -1,2 +1,3 @@
 turn on 0,0 through 4,0
-turn off 5,0 through 15,0
+toggle 0,0 through 3,0
+turn off 25,10 through 35,15
