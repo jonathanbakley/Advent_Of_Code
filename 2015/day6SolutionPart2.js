@@ -34,7 +34,10 @@ function problemSixSolution(data) {
     console.log("2. updated lights grid DONE for step " + i);
   });
 
-  const totalOn = Object.keys(arrayOfEditedCells).length;
+  let totalOn = 0;
+  Object.keys(arrayOfEditedCells).forEach(i => {
+    totalOn = totalOn + arrayOfEditedCells[i];
+  });
   return totalOn;
 }
 
@@ -54,18 +57,29 @@ function getEditedGridCells(EditedCellsStart, start, end, whatToDo) {
       if (EditedCells[`${xStart},${yStart}`]) {
         switch (whatToDo) {
           case "on":
-            EditedCells[`${xStart},${yStart}`] = true;
+            EditedCells[`${xStart},${yStart}`] =
+              EditedCells[`${xStart},${yStart}`] + 1;
             break;
           case "off":
+            EditedCells[`${xStart},${yStart}`] =
+              EditedCells[`${xStart},${yStart}`] - 1;
+            if (EditedCells[`${xStart},${yStart}`] <= 0) {
+              delete EditedCells[`${xStart},${yStart}`];
+            }
+            break;
           case "toggle":
-            delete EditedCells[`${xStart},${yStart}`];
+            EditedCells[`${xStart},${yStart}`] =
+              EditedCells[`${xStart},${yStart}`] + 2;
             break;
         }
       } else {
         switch (whatToDo) {
           case "on":
+            EditedCells[`${xStart},${yStart}`] = 1;
+            break;
           case "toggle":
-            EditedCells[`${xStart},${yStart}`] = true;
+            EditedCells[`${xStart},${yStart}`] = 2;
+            break;
         }
       }
     }
