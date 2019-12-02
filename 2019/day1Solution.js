@@ -9,6 +9,7 @@ function day1Solution(modules) {
   return modules.reduce((total, singleModule) => {
     let remander = Math.floor(singleModule / 3) - 2;
     let moduleTotal = 0;
+    // comment out if not doing part 2
     while (remander > 0) {
       moduleTotal = moduleTotal + remander;
       remander = Math.floor(remander / 3) - 2;
