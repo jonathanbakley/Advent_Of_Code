@@ -47,5 +47,5 @@ function day2SolutionPart2(instructions) {
   }
 }
 
-// console.log(day2SolutionPart1());
+console.log(day2SolutionPart1(instructionsSet));
 console.log(day2SolutionPart2(instructionsSet));
