@@ -20,7 +20,8 @@ function day3Solution(data) {
   const steps = [];
   const duplicates = wire1Grid.filter((location, i) => {
     const index = wire2Grid.indexOf(location);
-    if (index != -1) {
+    if (index != -1 && i !== 0) {
+      // This is used for PART2 of the Day 3 solution
       steps.push(i + index);
       return true;
     }
@@ -36,18 +37,23 @@ function day3Solution(data) {
     }
     return distance;
   });
-  console.log("Distances:", distances);
-  console.log("Steps:", steps);
-  return Math.min(...distances);
+
+  console.log("Day 3 Part 2 Steps", Math.min(...steps));
+  console.log("Day 3 Part 1 Distance", Math.min(...distances));
+  return "success";
 }
 
+/**
+ * Adds all the locations to the wireGrid based on the passed in instruction
+ * @param {array} wireGrid Array of all locations visited example ["0,0", "0,1",...]
+ * @param {string} instruction Executed instruction example "R34"
+ */
 function addInstructionToGrid(wireGrid, instruction) {
   const numberOfMoves = parseInt(instruction.substr(1), 10);
   let xValue = 0;
   let yValue = 0;
   xValue = parseInt(wireGrid[wireGrid.length - 1].split(",")[0], 10);
   yValue = parseInt(wireGrid[wireGrid.length - 1].split(",")[1], 10);
-  //   console.log(wireGrid, instruction, instruction.charAt(0), numberOfMoves);
   for (var i = 1; i < numberOfMoves + 1; i++) {
     switch (instruction.charAt(0)) {
       case "R":
@@ -63,10 +69,10 @@ function addInstructionToGrid(wireGrid, instruction) {
         wireGrid.push(`${xValue},${yValue - i}`);
         break;
       default:
-        console.log("Something went wrong");
+        break;
     }
   }
   return wireGrid;
 }
 
-console.log(day3Solution(data));
+day3Solution(data);
