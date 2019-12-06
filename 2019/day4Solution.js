@@ -3,6 +3,8 @@ function day4Solution(start, end) {
 
   for (var currentPass = start; currentPass < end; currentPass++) {
     const allAscending = checkForNoDecrease(currentPass);
+
+    // uncomment checkForDuplicatePart1 and comment out checkForDuplicate for part 1
     const isDuplicate = checkForDuplicate(currentPass);
     // const isDuplicate = checkForDuplicatePart1(currentPass);
 
