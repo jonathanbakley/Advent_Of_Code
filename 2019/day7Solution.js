@@ -5,12 +5,31 @@ const data = fs.readFileSync("day7Input.txt", "utf8");
 
 const instructionsSet = data.split(",").map(Number);
 
-function intComputer(instructions, phaseSetting, input, first, index) {
+/**
+ * IntComputer that takes and input and instructions, supports 8 instructions
+ * @param {array} instructions computer imput instructions as an array
+ * @param {number} phaseSetting first input value
+ * @param {number} input input to be used after first value
+ * @param {boolean} first is this the first input
+ * @param {number} index index of the instruction the computer is currently on
+ *
+ * Returns an array including:
+ *  1. output value
+ *  2. updated instructions set
+ *  3. current index or 999999 if at the end of the instruction
+ */
+function intComputer(
+  instructions,
+  phaseSetting,
+  input,
+  first = true,
+  index = 0
+) {
   let i = index;
   let firstInput = first;
   let outputReturn;
 
-  while (i !== 99) {
+  while (true) {
     // split instruction into parts (example) 10102 -> [1,0,1,2];
     const parsedInstruction = parseInstruction(instructions[i]);
 
@@ -130,19 +149,19 @@ function day7Solution(instructionsSet, numberOfAmps) {
     phasesArray.push(i - 1);
     i--;
   }
-  //   const phaseSet = [4, 3, 2, 1, 0];
   perm(phasesArray).forEach(phaseSet => {
     let input = 0;
     let output;
     for (var k = 0; k < phaseSet.length; k++) {
       const newInstructionsSet = [...instructionsSet];
-      output = intComputer(newInstructionsSet, phaseSet[k], input);
+      [output] = intComputer(newInstructionsSet, phaseSet[k], input);
       input = output;
     }
     outputs.push(output);
   });
 
-  console.log("output", outputs.length, Math.max(...outputs));
+  part1FuelAmount = Math.max(...outputs);
+  console.log("output part 1", part1FuelAmount);
 }
 
 function day7SolutionPart2(instructionsSet, numberOfAmps) {
@@ -153,7 +172,6 @@ function day7SolutionPart2(instructionsSet, numberOfAmps) {
     phasesArray.push(i - 1);
     i--;
   }
-  //   const phaseSet = [9, 7, 8, 5, 6];
   perm([9, 8, 7, 6, 5]).forEach(phaseSet => {
     let input = 0;
     let output;
@@ -182,31 +200,24 @@ function day7SolutionPart2(instructionsSet, numberOfAmps) {
         if (k === 4) {
           initialOutputs.push(output);
         }
-        console.log("Amplifier", k, currentInstruction[k], output);
       }
       l++;
-      console.log(
-        "OUTPUT",
-        output,
-        "INPUT",
-        input,
-        initialOutputs[initialOutputs.length - 2]
-      );
-      // console.log(newInstructionsSetPerComputer);
     }
     outputs.push(initialOutputs[initialOutputs.length - 2]);
-    // console.log("output", output);
   });
 
-  console.log("output", outputs, outputs.length, Math.max(...outputs));
-
-  //   console.log(intComputer(instructionsSet, 4, 0));
+  const part2FuelAmount = Math.max(...outputs);
+  console.log("output part 2", part2FuelAmount);
 }
 
-// day7Solution(instructionsSet, 5);
+day7Solution(instructionsSet, 5);
 day7SolutionPart2(instructionsSet);
-// console.log(intComputer(instructionsSet, 9, 129));
 
+/**
+ * I cannot take credit for this function as I got it from stack overflow
+ * To solve this problem I needed a function to get all the permutations given an array.
+ * This function does that for me.
+ */
 function perm(xs) {
   let ret = [];
 
