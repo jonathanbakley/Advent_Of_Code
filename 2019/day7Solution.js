@@ -142,6 +142,7 @@ function executeConditional(parsedInstruction, isLessThan, instructions, i) {
 }
 
 function day7Solution(instructionsSet, numberOfAmps) {
+  console.time("Day 7 Part1");
   let i = numberOfAmps;
   let phasesArray = [];
   let outputs = [];
@@ -162,9 +163,11 @@ function day7Solution(instructionsSet, numberOfAmps) {
 
   part1FuelAmount = Math.max(...outputs);
   console.log("output part 1", part1FuelAmount);
+  console.timeEnd("Day 7 Part1");
 }
 
 function day7SolutionPart2(instructionsSet, numberOfAmps) {
+  console.time("Day 7 Part2");
   let i = numberOfAmps;
   let phasesArray = [];
   let outputs = [];
@@ -208,6 +211,7 @@ function day7SolutionPart2(instructionsSet, numberOfAmps) {
 
   const part2FuelAmount = Math.max(...outputs);
   console.log("output part 2", part2FuelAmount);
+  console.timeEnd("Day 7 Part2");
 }
 
 day7Solution(instructionsSet, 5);

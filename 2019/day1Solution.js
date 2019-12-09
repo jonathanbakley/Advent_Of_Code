@@ -14,6 +14,7 @@ function day1Solution(modules) {
       moduleTotal = moduleTotal + remander;
       remander = Math.floor(remander / 3) - 2;
     }
+    //
     return total + moduleTotal;
   }, 0);
 }

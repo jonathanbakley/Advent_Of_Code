@@ -5,15 +5,31 @@ function day4Solution(start, end) {
     const allAscending = checkForNoDecrease(currentPass);
 
     // uncomment checkForDuplicatePart1 and comment out checkForDuplicate for part 1
-    const isDuplicate = checkForDuplicate(currentPass);
-    // const isDuplicate = checkForDuplicatePart1(currentPass);
+    // const isDuplicate = checkForDuplicate(currentPass);
+    const isDuplicate = checkForDuplicatePart1(currentPass);
 
     if (!allAscending || !isDuplicate) {
       numberOfPasswords--;
     }
   }
 
-  console.log("Number of Passwords: ", numberOfPasswords);
+  console.log("Part 1 Number of Passwords: ", numberOfPasswords);
+}
+
+function day4SolutionPart2(start, end) {
+  let numberOfPasswords = end - start;
+
+  for (var currentPass = start; currentPass < end; currentPass++) {
+    const allAscending = checkForNoDecrease(currentPass);
+
+    const isDuplicate = checkForDuplicate(currentPass);
+
+    if (!allAscending || !isDuplicate) {
+      numberOfPasswords--;
+    }
+  }
+
+  console.log("Part 2 Number of Passwords: ", numberOfPasswords);
 }
 
 /**
@@ -77,3 +93,4 @@ function checkForNoDecrease(password) {
 }
 
 day4Solution(246540, 787419);
+day4SolutionPart2(246540, 787419);

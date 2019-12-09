@@ -32,8 +32,8 @@ function day6Solution(data) {
   // Part 2 Solution
   const orbitsFromSanta = distanceFromSanta(newGraph);
   console.log("Orbits From Santa:", orbitsFromSanta);
-  console.timeEnd("day6");
   console.log("COUNT: ", count);
+  console.timeEnd("day6");
 }
 
 /**

@@ -4,6 +4,7 @@ var path = require("path");
 const data = fs.readFileSync("day2Input.txt", "utf8");
 
 const instructionsSet = data.split(",").map(Number);
+const instructionsSet2 = [...instructionsSet];
 
 function day2SolutionPart1(instructions) {
   let i = 0;
@@ -47,5 +48,5 @@ function day2SolutionPart2(instructions) {
   }
 }
 
-console.log(day2SolutionPart1(instructionsSet));
-console.log(day2SolutionPart2(instructionsSet));
+console.log("Part 1:", day2SolutionPart1(instructionsSet));
+console.log("Part 2:", day2SolutionPart2(instructionsSet2));
