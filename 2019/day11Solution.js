@@ -2,11 +2,12 @@ var fs = require("fs");
 var path = require("path");
 
 const data = fs.readFileSync(
-  path.resolve(__dirname, "./day9Input.txt"),
+  path.resolve(__dirname, "./day11Input.txt"),
   "utf8"
 );
 
 const instructionsSet = data.split(",").map(Number);
+let directionsArray = [];
 
 /**
  * IntComputer that takes and input and instructions, supports 8 instructions
@@ -77,9 +78,9 @@ function intComputer(
         outputReturn = instructions[i + 1] || 0;
       }
       i = i + 2;
-      console.log(outputReturn);
-      // break;
-      // return [outputReturn, instructions, i];
+      input = implementPainting(outputReturn);
+      phaseSetting = input;
+      //   intComputer(instructions, 0, 0, false, i, relativeBase);
     } else if (parsedInstruction[3] === 5) {
       i = executeJump(parsedInstruction, 1, instructions, i, relativeBase);
     } else if (parsedInstruction[3] === 6) {
@@ -218,14 +219,118 @@ function executeConditional(
   }
 }
 
-function day9Solution(instructionsSet) {
-  console.time("Time Part 1");
-  console.log("Part1", intComputer(instructionsSet, 1, 1)[0]);
-  console.timeEnd("Time Part 1");
+let robotLocation = [0, 0];
+// 0 = up
+// 1 = left
+// 2 = down
+// 3 = right
+let pointing = 0;
+let paintedLocations = [];
+let currentColor;
 
-  console.time("Time Part 2");
-  console.log("Part2", intComputer(instructionsSet, 2, 2)[0]);
-  console.timeEnd("Time Part 2");
+function implementPainting(outputValue) {
+  directionsArray.push(outputValue);
+
+  if (directionsArray.length % 2 === 0) {
+    // move robot location
+    if (outputValue === 0) {
+      // turn left
+      pointing = pointing === 3 ? 0 : pointing + 1;
+    } else {
+      // turn right
+      pointing = pointing === 0 ? 3 : pointing - 1;
+    }
+    // console.log(pointing);
+    switch (pointing) {
+      case 0:
+        robotLocation[1] = robotLocation[1] + 1;
+        break;
+      case 1:
+        robotLocation[0] = robotLocation[0] - 1;
+        break;
+      case 2:
+        robotLocation[1] = robotLocation[1] - 1;
+        break;
+      case 3:
+        robotLocation[0] = robotLocation[0] + 1;
+        break;
+      default:
+        console.log("Something went wrong");
+    }
+
+    // handle currentColor
+    const currentLocationIndex = paintedLocations.findIndex(
+      item => item.location === robotLocation[0] + "," + robotLocation[1]
+    );
+    if (currentLocationIndex !== -1) {
+      currentColor = paintedLocations[currentLocationIndex].color;
+    } else {
+      currentColor = 0;
+    }
+  } else {
+    // painting operation
+    const indexOfLocation = paintedLocations.findIndex(
+      item => item.location === robotLocation[0] + "," + robotLocation[1]
+    );
+
+    if (indexOfLocation !== -1) {
+      paintedLocations[indexOfLocation].color = outputValue;
+    } else {
+      paintedLocations.push({
+        location: robotLocation[0] + "," + robotLocation[1],
+        color: outputValue
+      });
+    }
+  }
+  return currentColor;
+}
+
+function day9Solution(instructionsSet) {
+  intComputer(instructionsSet, 0, 0);
+  console.log("PART 1:", paintedLocations.length);
+
+  // reset globals for part 2
+  directionsArray = [];
+  robotLocation = [0, 0];
+  pointing = 0;
+  paintedLocations = [];
+  currentColor;
+
+  intComputer(instructionsSet, 1, 1);
+  createOutput();
+}
+
+function createOutput() {
+  let outputRegistration = [];
+  for (var g = 0; g < paintedLocations.length; g++) {
+    let [xVal, yVal] = paintedLocations[g].location.split(",");
+    yVal = parseInt(yVal, 10) + 5;
+    xVal = parseInt(xVal, 10);
+    const color = paintedLocations[g].color;
+
+    const paintColor = color === 1 ? "X" : " ";
+    outputRegistration.push([xVal, yVal, paintColor]);
+  }
+
+  let grid = ["0", "0", "0", "0", "0", "0"];
+  for (var r = 0; r < 6; r++) {
+    for (var n = 0; n < 100; n++) {
+      grid[r] = grid[r] + "0";
+    }
+  }
+
+  outputRegistration.forEach(location => {
+    grid[location[1]] =
+      grid[location[1]].substring(0, location[0]) +
+      location[2] +
+      grid[location[1]].substring(location[0] + 1);
+  });
+
+  grid = grid.reverse();
+  console.log("Part 2:");
+  for (var b = 0; b < grid.length; b++) {
+    console.log(grid[b].replace(/0/gi, " "));
+  }
 }
 
 day9Solution(instructionsSet);

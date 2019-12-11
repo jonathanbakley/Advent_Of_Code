@@ -4,6 +4,7 @@ var path = require("path");
 const data = fs.readFileSync("day8Input.txt", "utf8");
 
 function day8SolutionPart1(data) {
+  console.time("Part 1 Time");
   let layers = getLayers(data);
   for (var i = 0; i < data.length; i = i + 150) {
     layers.push(data.substring(i, i + 150));
@@ -17,9 +18,11 @@ function day8SolutionPart1(data) {
   const twoDigits = leastZeroLayer.split("2").length - 1;
   const oneDigits = leastZeroLayer.split("1").length - 1;
   console.log("Part 1 Solution:", twoDigits * oneDigits);
+  console.timeEnd("Part 1 Time");
 }
 
 function day8SolutionPart2(data) {
+  console.time("Part 2 Time");
   let layers = getLayers(data);
   let image = "";
   for (var k = 0; k < 150; k++) {
@@ -34,6 +37,7 @@ function day8SolutionPart2(data) {
   for (var l = 0; l < 150; l = l + 25) {
     console.log(image.substring(l, l + 25));
   }
+  console.timeEnd("Part 2 Time");
 }
 
 function getLayers(data) {
