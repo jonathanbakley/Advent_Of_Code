@@ -98,13 +98,10 @@ function day10SolutionPart2(slopesAndQuad) {
     .concat(quad4)
     .concat(quad3);
 
-  //   for (var n = 0; n < sorted.length; n++) {
-  //     console.log("NUMBER", n + 1, sorted[n]);
-  //   }
   const solutionFormatted =
     sorted[199].location[0] * 100 + sorted[199].location[1];
   console.log("Part 2:", sorted[200 - 1]);
-  console.log("Part 2 Solution:", sorted[200 - 1]);
+  console.log("Part 2 Solution:", solutionFormatted);
 }
 
 function getQuadSlopes(num, slopesAndQuad) {
